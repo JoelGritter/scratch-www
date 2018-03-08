@@ -142,10 +142,12 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: 'static'},
             {from: 'intl', to: 'js'}
-        ]),
+        ])
+    ]).concat(process.env.NODE_ENV === 'production' ? [
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true
-        }),
+        })
+    ] : []).concat([
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': '"' + (process.env.NODE_ENV || 'development') + '"',
             'process.env.SENTRY_DSN': '"' + (process.env.SENTRY_DSN || '') + '"',
